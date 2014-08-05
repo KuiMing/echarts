@@ -28,10 +28,10 @@ function option0 () {
             x: 'left',
             y: 'top',
             feature : {
-                mark : true,
-                dataView : {readOnly: false},
-                restore : true,
-                saveAsImage : true
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                restore : {show: true},
+                saveAsImage : {show: true}
             }
         },
         grid:{
@@ -109,7 +109,7 @@ function option0 () {
                 type: 'bar',
                 itemStyle : {
                     normal : {
-                        color : (function(){
+                        color : (function (){
                             var zrColor = require('zrender/tool/color');
                             return zrColor.getLinearGradient(
                                 0, 80, 0, 500,

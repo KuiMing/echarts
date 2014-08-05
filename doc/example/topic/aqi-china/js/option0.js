@@ -15,27 +15,24 @@ function option0 (name) {
             x: 'right',
             //y: 'center',
             feature : {
-                mark : true,
-                dataView : {readOnly: false},
-                restore : true,
-                saveAsImage : true
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                restore : {show: true},
+                saveAsImage : {show: true}
             }
         },
         dataRange: {
             min : data[name + 'Min'],
             max : data[name + 'Max'],
             calculable : true,
-            color: ['maroon','purple','red','orange','yellow','lightgreen'],
-            textStyle:{
-                color:'#fff'
-            }
+            color: ['maroon','purple','red','orange','yellow','lightgreen']
         },
         series : [
             {
                 type: 'map',
                 mapType: 'china',
                 mapLocation: {
-                    x:'left'
+                    //x:'left'
                 },
                 hoverable: false,
                 roam:true,

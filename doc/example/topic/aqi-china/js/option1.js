@@ -24,7 +24,7 @@ function option1 (name) {
         },
         tooltip : {
             trigger: 'axis',
-            formatter: function(v) {
+            formatter: function (v) {
                 var res = v[0][1] + '<br/>';
                 if (v.length < 5) {
                     for (var i = 0, l = v.length; i < l; i++) {
@@ -48,11 +48,11 @@ function option1 (name) {
             x: 'right',
             y: 'center',
             feature : {
-                mark : true,
-                dataView : {readOnly: false},
-                magicType:['line', 'bar'],
-                restore : true,
-                saveAsImage : true
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                magicType : {show: true, type: ['line', 'bar']},
+                restore : {show: true},
+                saveAsImage : {show: true}
             }
         },
         grid:{
@@ -98,7 +98,7 @@ function option1 (name) {
             type: 'radar',
             tooltip: {
                 trigger:'axis',
-                formatter: function(v) {
+                formatter: function (v) {
                     var res = v[0][3] + '<br/>';
                     if (v.length < 5) {
                         for (var i = 0, l = v.length; i < l; i++) {
@@ -130,6 +130,9 @@ function option1 (name) {
     for (var i = 0, l = keyCity.length; i < l; i++) {
         city = keyCity[i];
         singleData = cityToData[city];
+        if (typeof singleData == 'undefined') {
+            continue;
+        }
         seriesData = [
             singleData.aqi, 
             singleData.pm2_5, 

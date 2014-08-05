@@ -22,6 +22,7 @@ function option3 (name) {
             text: '空气质量排行榜（'+name+' 前后30名）',
             subtext: 'data from PM25.in',
             sublink: 'http://www.pm25.in',
+            itemGap: 5,
             x:'center'
         },
         tooltip : {
@@ -33,11 +34,11 @@ function option3 (name) {
             //x: 'right',
             //y: 'center',
             feature : {
-                mark : true,
-                dataView : {readOnly: false},
-                //magicType:['line', 'bar'],
-                restore : true,
-                saveAsImage : true
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                //magicType: {show: true, type: ['line', 'bar']},
+                restore : {show: true},
+                saveAsImage : {show: true}
             }
         },
         dataRange: {
@@ -57,7 +58,7 @@ function option3 (name) {
         },
         grid:{
             x: 0,
-            y: 40,
+            y: 50,
             x2: 0,
             y2: 0,
             borderWidth:0
@@ -81,7 +82,7 @@ function option3 (name) {
                 max: 0,
                 axisLabel:{
                     show:false,
-                    formatter: function(v){
+                    formatter: function (v){
                         return -v;
                     }
                 }
@@ -135,7 +136,7 @@ function option3 (name) {
                     {name:'黑龙江', value:data.cityToData['哈尔滨'][key]},
                     {name:'内蒙古', value:data.cityToData['呼和浩特'][key]},
                     {name:'安徽', value:data.cityToData['合肥'][key]},
-                    {name:'北京', value:data.cityToData['北京'][key]},
+                    {name:'北京', value:(data.cityToData['北京'] || {})[key]},
                     {name:'福建', value:data.cityToData['福州'][key]},
                     {name:'上海', value:data.cityToData['上海'][key]},
                     {name:'湖北', value:data.cityToData['武汉'][key]},
@@ -155,7 +156,7 @@ function option3 (name) {
                 type: 'bar',
                 itemStyle : {
                     normal : {
-                        color : (function(){
+                        color : (function (){
                             var zrColor = require('zrender/tool/color');
                             return zrColor.getLinearGradient(
                                 0, 80, 0, 700,
@@ -177,7 +178,7 @@ function option3 (name) {
                 type: 'bar',
                 tooltip:{
                     trigger: 'item',
-                    formatter : function(v) {
+                    formatter : function (v) {
                         return v[0] + '<br/>' + v[1] + ' : ' + (-v[2]);
                     }
                 },
@@ -186,7 +187,7 @@ function option3 (name) {
                 barMinHeight: 5,
                 itemStyle : {
                     normal : {
-                        color : (function(){
+                        color : (function (){
                             var zrColor = require('zrender/tool/color');
                             return zrColor.getLinearGradient(
                                 0, 80, 0, 700,
@@ -197,7 +198,7 @@ function option3 (name) {
                         label : {
                             show : true,
                             position: 'left',
-                            formatter: function(a,b,c) {
+                            formatter: function (a,b,c) {
                                 return b + ' : ' + (-c);
                             }
                         }

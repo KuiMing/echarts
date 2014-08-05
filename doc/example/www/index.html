@@ -35,7 +35,7 @@
             'echarts/chart/line',
             'echarts/chart/map'
         ],
-        function(ec) {
+        function (ec) {
             //--- 折柱 ---
             var myChart = ec.init(document.getElementById('main'));
             myChart.setOption({
@@ -48,11 +48,11 @@
                 toolbox: {
                     show : true,
                     feature : {
-                        mark : true,
-                        dataView : {readOnly: false},
-                        magicType:['line', 'bar'],
-                        restore : true,
-                        saveAsImage : true
+                        mark : {show: true},
+                        dataView : {show: true, readOnly: false},
+                        magicType : {show: true, type: ['line', 'bar']},
+                        restore : {show: true},
+                        saveAsImage : {show: true}
                     }
                 },
                 calculable : true,

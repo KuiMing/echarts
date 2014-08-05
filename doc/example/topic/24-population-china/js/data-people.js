@@ -63,6 +63,7 @@ var option = {
         trigger: 'item'
     },
     legend: {
+        data:[],
         //orient: 'vertical',
         x:'right',
         y: 55,
@@ -84,10 +85,8 @@ var option = {
         x: 'right',
         y: 'center',
         feature : {
-            mark : true,
-            dataView : {readOnly: false},
-            restore : true,
-            saveAsImage : true
+            mark : {show: true},
+            saveAsImage : {show: true}
         }
     },
     grid: {
@@ -98,7 +97,7 @@ var option = {
         {
             type : 'category',
             boundaryGap : false,
-            data : function(){
+            data : function (){
                 var list = [];
                 for (var i = 1987; i <= 2011; i++) {
                     list.push(i);
@@ -142,7 +141,7 @@ var option = {
         // 图例示意占位
         
     ],
-    animation: false
+    animation: true
 };
 
 

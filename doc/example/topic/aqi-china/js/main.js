@@ -54,7 +54,7 @@ require(
         'echarts/chart/radar',
         'echarts/chart/map'
     ],
-    function(ec) {
+    function (ec) {
         EC_READY = true;
         myChart0 = ec.init(document.getElementById('g0')).showLoading({effect:'bubble'});
         myChart1 = ec.init(document.getElementById('g1')).showLoading({effect:'bubble'});
@@ -111,7 +111,7 @@ function showTabContent(idx, type) {
     functionMap['chart' + idx](type);
 }
 
-var shapeList = [];
+var extShapeList = [];
 var dataWorst;
 var overviewContent = {
     aqi : [
@@ -151,9 +151,10 @@ var overviewContent = {
     ]
 }
 functionMap.chart0 = function (type) {
+    myChart0.hideLoading();
     myChart0.setOption(option0(type));
     dataWorst = data[type];
-    setTimeout(extMark, 200);
+    setTimeout(extMark, 100);
     $('#overview-head')[0].innerHTML = overviewContent[type][0];
     $('#overview-content')[0].innerHTML = overviewContent[type][1];
     $('#overview-link')[0].href = overviewContent[type][2];
@@ -161,26 +162,26 @@ functionMap.chart0 = function (type) {
 
 function extMark() {
     var map = myChart0.chart.map;
-    if (!map.geo2pos('china','北京')) {
-        setTimeout(extMark, 200);
+    if (!map || !map.geo2pos('china','北京')) {
+        setTimeout(extMark, 1000);
         return;
     }
     var zr = myChart0.getZrender();
-    zr.delShape(shapeList);
-    shapeList = [];
+    zr.delShape(extShapeList);
+    extShapeList = [];
     var x = Math.round(zr.getWidth() - 130);
     var y = 50;
     var pos;
     var city;
     var len = dataWorst.length;
+    var lineShape = require('zrender/shape/Line');
     for (var i = len - 1, l = len - 2; i > l; i--) {
         // 最差10位
         city = dataWorst[i].name;
         pos = map.getPosByGeo('china', cityGeo[city]);
         //pos = map.geo2pos('china', cityGeo[city]);
-        shapeList.push({
+        extShapeList.push(new lineShape({
             shape : 'line',
-            id : zr.newShapeId(),
             zlevel : 5,
             style : {
                 xStart : pos[0],
@@ -195,17 +196,18 @@ function extMark() {
                 text : city + ' : ' + dataWorst[i].value,
                 textPosition: 'end'//'specific'
             }
-        });
+        }));
         y += 30;
     }
-    for (var i = 0, l = shapeList.length; i < l; i++) {
-        zr.addShape(shapeList[i])
+    for (var i = 0, l = extShapeList.length; i < l; i++) {
+        zr.addShape(extShapeList[i])
     }
     zr.refresh();
-    //map.appendShape('china', shapeList);
+    //map.appendShape('china', extShapeList);
 }
 
 functionMap.chart1 = function () {
+    myChart1.hideLoading();
     myChart1.setOption(option1());
 }
 
@@ -225,7 +227,7 @@ function legendShare() {
         );
     }
     */
-    var legend = myChart1.compoent.legend;
+    var legend = myChart1.component.legend;
     var selected = legend.getSelectedMap();
     for (var city in selected) {
         if (selected[city]) {
@@ -233,20 +235,24 @@ function legendShare() {
             PG[city].color = zrColor.alpha(legend.getColor(city), 0.6);
         }
     }
+    myChart20.hideLoading();
+    myChart21.hideLoading();
+    myChart22.hideLoading();
     myChart20.setOption(option2(0, selected), true);
     myChart21.setOption(option2(1, selected), true);
     myChart22.setOption(option2(2, selected), true);
 }
 
 functionMap.chart3 = function (type) {
+    myChart3.hideLoading();
     myChart3.setOption(option3(type));
 }
 
 var resizeTicket;
-window.onload = function() {
-    window.onresize = function() {
+window.onload = function () {
+    window.onresize = function () {
         clearTimeout(resizeTicket);
-        resizeTicket = setTimeout(function(){
+        resizeTicket = setTimeout(function (){
             myChart0.resize();
             myChart1.resize();
             myChart20.resize();
